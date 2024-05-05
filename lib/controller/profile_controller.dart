@@ -42,8 +42,8 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> editProfile() async {
+  /*Future<void> editProfile() async {
     final response = AuthRepository().editProfile(name.value, birthDateController.text, genderController.text, File("path"));
-  }
+  }*/
 
 }

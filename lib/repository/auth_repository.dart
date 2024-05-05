@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:farm_guard/constants/network_constants.dart';
 import 'package:farm_guard/pages/Login/otp.dart';
 import 'package:farm_guard/repository/model/request/register_request.dart';
+import 'package:farm_guard/repository/model/response/change_password_response.dart';
 import 'package:farm_guard/repository/model/response/edit_profile_response.dart';
 import 'package:farm_guard/repository/model/response/error_response.dart';
 import 'package:farm_guard/repository/model/response/login_response.dart';
@@ -72,6 +73,25 @@ class AuthRepository extends ApiClient {
     );
     final response = await dio.post(NetworkConstants.EDIT_PROFILE, data: formData);
     return EditProfileResponse.fromJson(response.data);
+  }
+
+  Future<ChangePasswordResponse> sendOtpChangePassword(String email) async {
+    final response = await postMethod(NetworkConstants.SEND_OTP_CHANGE_PASSWORD, queryParameter: {
+      "credential" : email
+    });
+
+    return ChangePasswordResponse.fromJson(response);
+  }
+
+  Future<ChangePasswordResponse> changePasasword(String email, String password, String otp) async {
+    final response = await postMethod(NetworkConstants.CHANGE_PASSWORD, queryParameter: {
+      "credential" : email,
+      "password" : password,
+      "password_confirmation" : password,
+      "otp" : otp
+    });
+
+    return ChangePasswordResponse.fromJson(response);
   }
 
 }
