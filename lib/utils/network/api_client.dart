@@ -49,7 +49,7 @@ abstract class ApiClient {
 
   Future<dynamic> postMethod(
     String endpoint, {
-    Map<String, String>? queryParameter,
+    Map<String, dynamic>? queryParameter,
     Map<String, String>? header,
   }) async {
     try {

@@ -61,7 +61,7 @@ class _OtpScreenState extends State<OtpScreen> {
           text: "Selanjutnya",
           onTap: () async {
             if (_validateInputs()) {
-              await controller.activateAccount();
+              controller.handleOtpAction();
             } else {
               CustomSnackbar.warningMessage("Informasi", "OTP tidak boleh kosong");
             }

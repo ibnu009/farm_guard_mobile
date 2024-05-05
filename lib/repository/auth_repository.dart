@@ -6,6 +6,7 @@ import 'package:farm_guard/constants/network_constants.dart';
 import 'package:farm_guard/pages/Login/otp.dart';
 import 'package:farm_guard/repository/model/request/register_request.dart';
 import 'package:farm_guard/repository/model/response/change_password_response.dart';
+import 'package:farm_guard/repository/model/request/reset_password_request.dart';
 import 'package:farm_guard/repository/model/response/edit_profile_response.dart';
 import 'package:farm_guard/repository/model/response/error_response.dart';
 import 'package:farm_guard/repository/model/response/login_response.dart';
@@ -48,30 +49,28 @@ class AuthRepository extends ApiClient {
     final response = await postMethod(
       NetworkConstants.OTP_URL,
       queryParameter: {"otp": otpCode},
-      header: {
-        "Authorization" : "Bearer $token"
-      },
+      header: {"Authorization": "Bearer $token"},
     );
 
     return OtpResponse.fromJson(response);
   }
 
-  Future<EditProfileResponse> editProfile(String name, String birthDate, String gender, File photo) async {
+  Future<EditProfileResponse> editProfile(
+      String name, String birthDate, String gender, File photo) async {
     String fileName = photo.path.split('/').last;
     FormData formData = FormData.fromMap({
-      "name" : name,
+      "name": name,
       "birthdate": birthDate,
-      "gender" : gender,
+      "gender": gender,
       "photo": await MultipartFile.fromFile(photo.path, filename: fileName),
     });
-    Dio dio = new Dio(
-        BaseOptions(
-          validateStatus: (statusCode){
-            return true;
-          },
-        )
-    );
-    final response = await dio.post(NetworkConstants.EDIT_PROFILE, data: formData);
+    Dio dio = new Dio(BaseOptions(
+      validateStatus: (statusCode) {
+        return true;
+      },
+    ));
+    final response =
+        await dio.post(NetworkConstants.EDIT_PROFILE, data: formData);
     return EditProfileResponse.fromJson(response.data);
   }
 
@@ -94,4 +93,30 @@ class AuthRepository extends ApiClient {
     return ChangePasswordResponse.fromJson(response);
   }
 
+  Future<EditProfileResponse> forgotPassword(String email) async {
+    final response = await postMethod(NetworkConstants.FORGOT_PASSWORD,
+        queryParameter: {"credential": email});
+
+    return EditProfileResponse.fromJson(response);
+  }
+
+  Future<EditProfileResponse> resetPassword(
+      {required String email,
+      required String password,
+      required String passwordConfirmation,
+      required String otp}) async {
+    ResetPasswordRequest resetPasswordRequest = ResetPasswordRequest(
+      credential: email,
+      otp: int.parse(otp),
+      password: password,
+      passwordConfirmation: passwordConfirmation,
+    );
+
+    final response = await postMethod(NetworkConstants.RESET_PASSWORD,
+        queryParameter: resetPasswordRequest.toJson());
+
+    print("REST: $response");
+
+    return EditProfileResponse.fromJson(response);
+  }
 }

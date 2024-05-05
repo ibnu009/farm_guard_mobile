@@ -204,15 +204,7 @@ class _LoginState extends State<login> {
                   fontWeight: FontWeight.w600),),
           Spacer(),
           GestureDetector(
-            onTap: () {
-              (context, listen: false);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => lupapassword()),
-              ).then((value) {
-                setState(() {});
-              });
-            },
+            onTap: loginController.navigateToForgotPassword,
             child: Text('Lupa kata sandi?',
                 style: GoogleFonts.poppins(
                     color: Color(0xff2E3AB5),
