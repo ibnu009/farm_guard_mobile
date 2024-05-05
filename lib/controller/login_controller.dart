@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:farm_guard/constants/network_constants.dart';
 import 'package:farm_guard/navbar.dart';
+import 'package:farm_guard/pages/Login/lupa_password.dart';
 import 'package:farm_guard/pages/otp/otp_screen.dart';
 import 'package:farm_guard/repository/auth_repository.dart';
 import 'package:farm_guard/utils/dialog/custom_snackbar.dart';
@@ -16,6 +17,10 @@ class LoginController extends GetxController {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  void navigateToForgotPassword(){
+    Get.toNamed(lupapassword.routeName);
+  }
 
   void loginUser() async {
     LoadingUtils.showLoading();

@@ -1,9 +1,14 @@
 import 'package:farm_guard/pages/Login/login.dart';
 import 'package:farm_guard/pages/Login/otp.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/forgot_password_controller.dart';
+
 class lupapassword extends StatefulWidget {
+  static const routeName = "/forgot-password";
+
   const lupapassword({super.key});
 
   @override
@@ -11,25 +16,16 @@ class lupapassword extends StatefulWidget {
 }
 
 class _lupapasswordState extends State<lupapassword> {
+  final forgotPasswordController = Get.put(ForgotPasswordController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: Container(
-          child: GestureDetector(
-            onTap: () {
-              (context, listen: false);
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => login(),
-                  ),
-                  (route) => false);
-            },
-            child: Image.asset('assets/back.png'),
-          ),
-        ),
+        leading: IconButton(onPressed: (){
+          Get.back();
+        }, icon: Icon(Icons.chevron_left, color: Colors.white,)),
         title: Text(
           "Lupa Kata Sandi",
           style: GoogleFonts.poppins(
@@ -47,7 +43,7 @@ class _lupapasswordState extends State<lupapassword> {
             Align(
               alignment: Alignment.topLeft,
               child: Text(
-                'Masukkan nomor hp anda dan akan kami \nkirim kode OTP untuk mengatur ulang kata sandi anda.',
+                'Masukkan email dan akan kami \nkirim kode OTP untuk mengatur ulang kata sandi anda.',
                 style: GoogleFonts.poppins(
                   fontSize: 17,
                   color: Colors.black,
@@ -61,7 +57,7 @@ class _lupapasswordState extends State<lupapassword> {
               children: [
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text('Nomor hp',
+                  child: Text('Email',
                       style: GoogleFonts.poppins(
                           color: Color(0xff3E3E3E),
                           fontSize: 15,
@@ -72,12 +68,13 @@ class _lupapasswordState extends State<lupapassword> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                  controller: forgotPasswordController.emailController,
                   style: TextStyle(
                       color: Color(0xff444444),
                       fontSize: 17,
                       fontWeight: FontWeight.w600),
                   decoration: InputDecoration(
-                    hintText: 'Isi dengan nomor hp anda',
+                    hintText: 'Isi dengan email anda',
                     hintStyle: GoogleFonts.poppins(
                         color: Color.fromRGBO(110, 124, 141, 1),
                         fontSize: 15,
@@ -86,9 +83,7 @@ class _lupapasswordState extends State<lupapassword> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 420,
-            ),
+            Spacer(),
             Container(
               width: 400,
               height: 50,
@@ -99,16 +94,7 @@ class _lupapasswordState extends State<lupapassword> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     )),
-                onPressed: () {
-                  {
-                    (context, listen: false);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => otp()),
-                    );
-                  }
-                  ;
-                },
+                onPressed: forgotPasswordController.forgotPassword,
                 child: Text(
                   'Selanjutnya',
                   style: GoogleFonts.poppins(
@@ -119,9 +105,11 @@ class _lupapasswordState extends State<lupapassword> {
                 ),
               ),
             ),
+            SizedBox(height: 16,)
           ],
         ),
       ),
     );
   }
+
 }

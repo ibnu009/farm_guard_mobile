@@ -19,9 +19,20 @@ class OtpController extends GetxController {
   List.generate(6, (index) => TextEditingController());
 
   final password = Get.arguments["password"] ?? "";
+  final passwordConfirmation = Get.arguments["password_confirmation"] ?? "";
+
   final action = Get.arguments["register"];
   final email = Get.arguments["email"];
   final token = Get.arguments["token"];
+
+  void handleOtpAction(){
+    if (action == "reset_password"){
+      resetPassword();
+      return;
+    }
+
+    activateAccount();
+  }
 
   Future<void> activateAccount() async {
     final otp = otpControllers.map((controller) => controller.text).join();
@@ -34,6 +45,22 @@ class OtpController extends GetxController {
         CustomSnackbar.errorMessage("Informasi", response.meta.message);
         Get.offAllNamed(login.routeName);
       }
+    } else {
+      CustomSnackbar.errorMessage("Informasi", response.meta.message);
+    }
+  }
+
+  Future<void> resetPassword() async {
+    final otp = otpControllers.map((controller) => controller.text).join();
+    LoadingUtils.showLoading();
+
+    final response = await authRepository.resetPassword(
+      email: email, password: password, passwordConfirmation: passwordConfirmation, otp: otp,
+    );
+
+    LoadingUtils.hideLoader();
+    if (response.meta.code == 200) {
+      Get.offAllNamed(login.routeName);
     } else {
       CustomSnackbar.errorMessage("Informasi", response.meta.message);
     }

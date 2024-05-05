@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/profile_controller.dart';
+
 class ubah_password extends StatefulWidget {
   const ubah_password({super.key});
 
