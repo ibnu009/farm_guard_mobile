@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:farm_guard/repository/auth_repository.dart';
 import 'package:farm_guard/utils/preferences/app_preferences.dart';
+import 'package:farm_guard/utils/utils/datetime_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +36,7 @@ class ProfileController extends GetxController {
       print(phone);
 
       nameController.text = name.value;
-      birthDateController.text = user.birthdate.toString();
+      birthDateController.text = user.birthdate.formatDate();
       phoneNumberController.text = phone.value;
       emailController.text = email.value;
       genderController.text = user.gender.toString();
