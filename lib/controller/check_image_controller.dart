@@ -64,7 +64,8 @@ class CheckImageController extends GetxController {
               CustomSnackbar.successMessage("Informasi", "Berhasil");
               Get.toNamed(hasil_gambar.routeName, arguments: {
                 "file_path": imageFile.value?.path,
-                "result": success.assumption
+                "result": success.assumption,
+                "note" : success.note
               });
             },
           );

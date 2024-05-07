@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class hasil_gambar extends StatefulWidget {
-
   static const routeName = "/imageResult";
 
   @override
@@ -13,9 +12,9 @@ class hasil_gambar extends StatefulWidget {
 }
 
 class _hasil_gambarState extends State<hasil_gambar> {
-
   final filePath = Get.arguments['file_path'];
   final result = Get.arguments['result'];
+  final note = Get.arguments['note'];
 
   @override
   void initState() {
@@ -68,7 +67,7 @@ class _hasil_gambarState extends State<hasil_gambar> {
                 height: 20,
               ),
               Text(
-                result == "Sehat" ? 'Jaga terus kesehatan sapi kamu ya!' : "Silahkan diarahkan ke dokter terdekat",
+                note,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
                   color: Color(0xff616161),
