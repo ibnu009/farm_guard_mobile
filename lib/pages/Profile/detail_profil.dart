@@ -175,10 +175,36 @@ class _detail_profilState extends State<detail_profil> {
                     fontWeight: FontWeight.normal),
               ),
             ),
+            Spacer(),
+            saveButton(),
             SizedBox(
               height: 20,
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget saveButton() {
+    return Container(
+      width: 400,
+      height: 60,
+      child: TextButton(
+        style: TextButton.styleFrom(
+            elevation: 10,
+            backgroundColor: Color(0xff2E3AB5),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            )),
+        onPressed: controller.editProfile,
+        child: Text(
+          'Simpan',
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

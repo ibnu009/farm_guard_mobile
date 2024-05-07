@@ -8,7 +8,7 @@ import 'package:farm_guard/repository/model/request/register_request.dart';
 import 'package:farm_guard/repository/model/response/change_password_response.dart';
 import 'package:farm_guard/repository/model/request/reset_password_request.dart';
 import 'package:farm_guard/repository/model/response/edit_profile_response.dart';
-import 'package:farm_guard/repository/model/response/error_response.dart';
+import 'package:farm_guard/repository/model/response/error_authentication_response.dart';
 import 'package:farm_guard/repository/model/response/login_response.dart';
 import 'package:farm_guard/repository/model/response/otp_response.dart';
 import 'package:farm_guard/repository/model/response/register_response.dart';
@@ -41,7 +41,7 @@ class AuthRepository extends ApiClient {
     if (response['meta']['code'] == 200) {
       return Right(RegisterResponse.fromJson(response));
     } else {
-      return Left(ErrorResponse.fromJson(response));
+      return Left(AuthErrorResponse.fromJson(response));
     }
   }
 
