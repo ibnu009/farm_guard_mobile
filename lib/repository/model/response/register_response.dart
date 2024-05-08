@@ -49,14 +49,14 @@ class Data {
 }
 
 class User {
-  String name;
-  String email;
-  String phone;
-  DateTime birthdate;
-  String gender;
-  DateTime updatedAt;
-  DateTime createdAt;
-  int id;
+  String name = "";
+  String email = "";
+  String phone = "";
+  DateTime birthdate = DateTime.now();
+  String gender = "";
+  DateTime updatedAt = DateTime.now();
+  DateTime createdAt = DateTime.now();
+  int id = -1;
 
   User({
     required this.name,

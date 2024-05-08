@@ -6,6 +6,8 @@ import 'package:farm_guard/utils/dialog/loading_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../repository/model/response/error_authentication_response.dart';
+
 class RegisterController extends GetxController {
   final authRepository = AuthRepository();
 
@@ -40,7 +42,7 @@ class RegisterController extends GetxController {
       response.fold(
         (failure) {
           LoadingUtils.hideLoader();
-          CustomSnackbar.errorMessage("Informasi", failure.meta.message);
+          CustomSnackbar.errorMessage("Informasi", errorMessage(failure.meta));
           print(failure.meta.message);
         },
         (success) {
@@ -54,5 +56,17 @@ class RegisterController extends GetxController {
         },
       );
     }
+  }
+
+  String errorMessage(Meta meta){
+    if (meta.data.email.isNotEmpty){
+      return meta.data.email.first;
+    }
+
+    if (meta.data.phone.isNotEmpty){
+      return meta.data.phone.first;
+    }
+
+    return meta.message;
   }
 }

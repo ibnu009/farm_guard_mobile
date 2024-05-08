@@ -6,7 +6,7 @@ String loginResponseToJson(LoginResponse data) => json.encode(data.toJson());
 
 class LoginResponse {
   Meta meta;
-  Data data;
+  Data? data;
 
   LoginResponse({
     required this.meta,
@@ -15,12 +15,12 @@ class LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
     meta: Meta.fromJson(json["meta"]),
-    data: Data.fromJson(json["data"]),
+    data: json["data"] == null ? null : Data.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
     "meta": meta.toJson(),
-    "data": data.toJson(),
+    "data": data?.toJson(),
   };
 }
 

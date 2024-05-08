@@ -32,25 +32,26 @@ class LoginController extends GetxController {
     response.fold(
       (failure) {
         LoadingUtils.hideLoader();
-        final response = json.encode(failure.data.toString());
-        print(response);
-        if (response != "[]") {
-          if (failure.data["message"] == NetworkConstants.UNVERIFIED_ACCOUNT_MESSAGE) {
+        final response = json.encode(failure.meta.toJson());
+        print("RESPONSE E " + response);
+        if (failure.meta.message == NetworkConstants.UNVERIFIED_ACCOUNT_MESSAGE) {
             Get.toNamed(OtpScreen.routeName, arguments: {
               "token" : failure.data["token"],
               "email" : emailController.text,
               "action" : "login",
               "password" : passwordController.text
             });
-          }
+
         } else {
           CustomSnackbar.errorMessage("Informasi", failure.meta.message);
           print(failure.meta.message);
         }
       },
       (success) async {
-        await AppPreferences().setUser(success.data.user);
-        await AppPreferences().writeSecureData(AppPreferences().token, success.data.token);
+        if (success.data?.user != null){
+          await AppPreferences().setUser(success.data!.user);
+        }
+        await AppPreferences().writeSecureData(AppPreferences().token, success.data?.token ?? '');
         LoadingUtils.hideLoader();
         Get.offAllNamed(navbar.routeName);
       },

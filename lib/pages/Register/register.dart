@@ -337,7 +337,6 @@ class _RegisterState extends State<register> {
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SafeArea(
           child: Container(
         margin: EdgeInsets.only(top: 30, left: 30, right: 30),

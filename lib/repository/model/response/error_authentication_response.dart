@@ -10,21 +10,17 @@ String errorResponseToJson(AuthErrorResponse data) => json.encode(data.toJson())
 
 class AuthErrorResponse {
   Meta meta;
-  ErrorData data;
 
   AuthErrorResponse({
     required this.meta,
-    required this.data,
   });
 
   factory AuthErrorResponse.fromJson(Map<String, dynamic> json) => AuthErrorResponse(
     meta: Meta.fromJson(json["meta"]),
-    data: ErrorData.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
     "meta": meta.toJson(),
-    "data": data.toJson(),
   };
 }
 
@@ -37,9 +33,9 @@ class ErrorData {
     required this.phone,
   });
 
-  factory ErrorData.fromJson(Map<String, dynamic> json) => ErrorData(
-    email: List<String>.from(json["email"].map((x) => x)),
-    phone: List<String>.from(json["phone"].map((x) => x)),
+  factory ErrorData.fromJson(Map<String, dynamic>? json) => ErrorData(
+    email: List<String>.from(  json == null ? [] : json?["email"].map((x) => x)),
+    phone: List<String>.from(json == null ? [] : json?["phone"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
@@ -52,22 +48,26 @@ class Meta {
   int code;
   String status;
   String message;
+  ErrorData data;
 
   Meta({
     required this.code,
     required this.status,
     required this.message,
+    required this.data,
   });
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
     code: json["code"],
     status: json["status"],
     message: json["message"],
+    data: ErrorData.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
     "code": code,
     "status": status,
     "message": message,
+    "data": data.toJson(),
   };
 }

@@ -31,7 +31,7 @@ class AuthRepository extends ApiClient {
     }
   }
 
-  Future<Either<ErrorResponse, RegisterResponse>> registerUser(
+  Future<Either<AuthErrorResponse, RegisterResponse>> registerUser(
       RegisterRequest registerRequest) async {
     final response = await postMethod(NetworkConstants.REGISTER_URL,
         queryParameter: registerRequest.toJson());

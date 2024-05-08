@@ -10,13 +10,12 @@ import 'package:get/get.dart';
 import 'package:farm_guard/navbar.dart';
 
 class OtpController extends GetxController {
-
   final authRepository = AuthRepository();
 
   RxBool isEnabled = false.obs;
 
   List<TextEditingController> otpControllers =
-  List.generate(6, (index) => TextEditingController());
+      List.generate(6, (index) => TextEditingController());
 
   final password = Get.arguments["password"] ?? "";
   final passwordConfirmation = Get.arguments["password_confirmation"] ?? "";
@@ -25,8 +24,8 @@ class OtpController extends GetxController {
   final email = Get.arguments["email"];
   final token = Get.arguments["token"];
 
-  void handleOtpAction(){
-    if (action == "reset_password"){
+  void handleOtpAction() {
+    if (action == "reset_password") {
       resetPassword();
       return;
     }
@@ -55,7 +54,10 @@ class OtpController extends GetxController {
     LoadingUtils.showLoading();
 
     final response = await authRepository.resetPassword(
-      email: email, password: password, passwordConfirmation: passwordConfirmation, otp: otp,
+      email: email,
+      password: password,
+      passwordConfirmation: passwordConfirmation,
+      otp: otp,
     );
 
     LoadingUtils.hideLoader();
@@ -70,11 +72,13 @@ class OtpController extends GetxController {
     final response = await authRepository.loginUser(email, password);
 
     response.fold(
-          (failure) {},
-          (success) async {
-        await AppPreferences().setUser(success.data.user);
-        await AppPreferences().writeSecureData(
-            AppPreferences().token, success.data.token);
+      (failure) {},
+      (success) async {
+        if (success.data?.user != null) {
+          await AppPreferences().setUser(success.data!.user);
+        }
+        await AppPreferences()
+            .writeSecureData(AppPreferences().token, success.data?.token ?? '');
         LoadingUtils.hideLoader();
         Get.offAllNamed(navbar.routeName);
       },
