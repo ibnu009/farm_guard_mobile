@@ -1,6 +1,5 @@
 import 'package:farm_guard/controller/home_controller.dart';
 import 'package:farm_guard/pages/Home/cek_gambar.dart';
-import 'package:farm_guard/pages/Home/hasil_gambar.dart';
 import 'package:farm_guard/pages/detail_history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
