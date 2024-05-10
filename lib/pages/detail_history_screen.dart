@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:farm_guard/repository/model/response/get_history_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,27 +37,65 @@ class DetailHistoryScreen extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return Column(
-      children: [
-        SizedBox(height: 24),
-        Text("Gambar Sapi", style: TextStyle(fontSize: 20),),
-        Padding(
-          padding: EdgeInsets.all(16),
-          child: Center(
-            child: Image.asset("assets/logo.png"),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 24),
+          Center(
+            child: CachedNetworkImage(
+              imageUrl: historyData.pathImage,
+              placeholder: (context, url) => new CircularProgressIndicator(),
+              errorWidget: (context, url, error) => new Icon(Icons.error),
+            ),
           ),
-        ),
-        Text("Tanggal Mendeteksi : ${historyData.date}", style: TextStyle(fontSize: 16),),
-        SizedBox(height: 16),
-        Text("Hasil Deteksi : ${historyData.typeHealth}", style: TextStyle(fontSize: 16),),
-        SizedBox(height: 16),
-        Text("Catatan : ${getClassificationNote()}", style: TextStyle(fontSize: 16),),
-      ],
+          SizedBox(height: 24),
+          Text("Detail Klasifikasi", style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 14)),
+          SizedBox(height: 12),
+          _buildClassificationDetail()
+        ],
+      ),
+    );
+  }
+
+  Widget _buildClassificationDetail() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Color(0xFFEFEFEF),
+        borderRadius: BorderRadius.circular(10)
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Tanggal Mendeteksi",
+            style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          Text(historyData.date, style: GoogleFonts.poppins()),
+          SizedBox(height: 8),
+          Text(
+            "Hasil Deteksi",
+            style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          Text(historyData.typeHealth, style: GoogleFonts.poppins(),),
+          SizedBox(height: 8),
+          Text(
+            "Catatan",
+            style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          Text(getClassificationNote(), style: GoogleFonts.poppins())
+        ],
+      ),
     );
   }
 
   String getClassificationNote() {
-    return historyData.typeHealth == "NORMAL" || historyData.typeHealth == "SEHAT" ? "Jaga terus kesehatan sapi kamu ya! " : "Silahkan diarahkan ke Dokter terdekat ";
+    return historyData.typeHealth == "NORMAL" ||
+            historyData.typeHealth == "SEHAT"
+        ? "Jaga terus kesehatan sapi kamu ya! "
+        : "Silahkan diarahkan ke Dokter terdekat ";
   }
-
 }
