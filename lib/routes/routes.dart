@@ -4,6 +4,7 @@ import 'package:farm_guard/pages/Home/hasil_gambar.dart';
 import 'package:farm_guard/pages/Login/buat_ulang_password.dart';
 import 'package:farm_guard/pages/Login/login.dart';
 import 'package:farm_guard/pages/Login/lupa_password.dart';
+import 'package:farm_guard/pages/Profile/FAQ.dart';
 import 'package:farm_guard/pages/detail_history_screen.dart';
 import 'package:farm_guard/pages/otp/otp_screen.dart';
 import 'package:farm_guard/pages/splash/splash_screen.dart';
@@ -20,7 +21,8 @@ class Routes {
     GetPage(name: OtpScreen.routeName, page: () => OtpScreen()),
     GetPage(name: ubahkatasandi.routeName, page: () => ubahkatasandi()),
     GetPage(name: lupapassword.routeName, page: () => lupapassword()),
-    GetPage(name: DetailHistoryScreen.routeName, page: () => DetailHistoryScreen())
+    GetPage(name: DetailHistoryScreen.routeName, page: () => DetailHistoryScreen()),
+    GetPage(name: FAQ.routeName, page: () => FAQ()),
   ];
 
 }
