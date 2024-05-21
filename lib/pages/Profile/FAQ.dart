@@ -40,15 +40,14 @@ class _FAQState extends State<FAQ> {
         physics: ScrollPhysics(),
         itemCount: faqItem.length,
         itemBuilder: (ctx, index) {
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          return Container(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            padding: EdgeInsets.only(bottom: 16),
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(width: 1))
+            ),
             child: ExpansionTile(
-              shape: const RoundedRectangleBorder(
-                  side: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              collapsedShape: const RoundedRectangleBorder(
-                  side: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              shape: Border(top: BorderSide.none, bottom: BorderSide.none),
               childrenPadding:
                   EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               tilePadding: EdgeInsets.symmetric(horizontal: 16),
