@@ -41,7 +41,7 @@ class HomeController extends GetxController {
         isLoadingRecordData.value = false;
       },
       (success) {
-        historyList.addAll(success.data);
+        historyList.addAll(success.data.where((element) => element.typeHealth != "Kelas Tidak ditemukan"));
         isLoadingRecordData.value = false;
         print(historyList);
       },
