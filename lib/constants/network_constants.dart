@@ -1,7 +1,7 @@
 class NetworkConstants {
-  static const BASE_URL = "https://pmk-alert.sdnkotakulon3bondowoso.sch.id/";
+  static const BASE_URL = "https://backend.farmguard.my.id/";
   static const CLASSIFICATION_BASE_URL =
-      "https://627d-112-78-133-106.ngrok-free.app/";
+      "https://backend.farmguard.my.id/";
 
   // Auth
   static const REGISTER_URL = BASE_URL + "api/register";
