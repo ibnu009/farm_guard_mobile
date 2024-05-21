@@ -4,10 +4,12 @@ import 'package:farm_guard/pages/Profile/FAQ.dart';
 import 'package:farm_guard/pages/Profile/detail_profil.dart';
 import 'package:farm_guard/pages/Profile/hubungi.dart';
 import 'package:farm_guard/pages/Profile/ubah_password.dart';
+import 'package:farm_guard/utils/dialog/custom_snackbar.dart';
 import 'package:farm_guard/utils/preferences/app_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class profil extends StatefulWidget {
   const profil({super.key});
@@ -182,13 +184,7 @@ class _profilState extends State<profil> {
                 child: GestureDetector(
                   onTap: () {
                     {
-                      (context, listen: false);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FAQ(),
-                        ),
-                      );
+                      Get.toNamed(FAQ.routeName);
                     }
                   },
                   child: Row(
@@ -220,14 +216,13 @@ class _profilState extends State<profil> {
               Container(
                 margin: EdgeInsets.only(left: 20, right: 20),
                 child: GestureDetector(
-                  onTap: () {
-                    (context, listen: false);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => hubungi(),
-                      ),
-                    );
+                  onTap: () async {
+                    String data = "whatsapp://send?phone=6282333546213";
+                    if (await canLaunchUrl(Uri.parse(data))) {
+                      await launchUrl(Uri.parse(data));
+                    } else {
+                      CustomSnackbar.defaultMessage("Informasi", "Whatsapp not installed");
+                    }
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
