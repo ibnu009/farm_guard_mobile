@@ -145,35 +145,40 @@ class _homeState extends State<home> {
                       ListView.builder(
                         shrinkWrap: true,
                         itemCount: homeController.historyList.length,
+                        physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (ctx, index) {
                           final data =
                           homeController.historyList[index];
-                          return ListTile(
-                            onTap: () {
-                              Get.toNamed(DetailHistoryScreen.routeName, arguments: {
-                                "history_data" : data
-                              });
-                            },
-                            leading: Icon(Icons.adb),
-                            title: Text(
-                              'Sapi ${data.typeHealth}',
-                              style: GoogleFonts.poppins(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListTile(
+                              onTap: () {
+                                Get.toNamed(DetailHistoryScreen.routeName, arguments: {
+                                  "history_data" : data
+                                });
+                              },
+                              leading: Icon(Icons.adb),
+                              title: Text(
+                                'Sapi ${data.typeHealth}',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                            subtitle: Text(
-                              data.date,
-                              style: GoogleFonts.poppins(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
+                              subtitle: Text(
+                                data.date,
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
                           );
                         },
                       ),
+                      SizedBox(height: 62,),
                     ],
                   ),
                 ),
