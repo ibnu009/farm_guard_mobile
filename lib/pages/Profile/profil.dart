@@ -11,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'contact_by_wa_page.dart';
+
 class profil extends StatefulWidget {
   const profil({super.key});
 
@@ -217,12 +219,7 @@ class _profilState extends State<profil> {
                 margin: EdgeInsets.only(left: 20, right: 20),
                 child: GestureDetector(
                   onTap: () async {
-                    String data = "whatsapp://send?phone=6282333546213";
-                    if (await canLaunchUrl(Uri.parse(data))) {
-                      await launchUrl(Uri.parse(data));
-                    } else {
-                      CustomSnackbar.defaultMessage("Informasi", "Whatsapp not installed");
-                    }
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContactByWaPage()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
