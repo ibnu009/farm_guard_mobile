@@ -21,7 +21,7 @@ class ClassificationResponse {
       ClassificationResponse(
         message: json["message"],
         assumption: json["assumption"],
-        note: json["note"],
+        note: json["note"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

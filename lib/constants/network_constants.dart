@@ -1,5 +1,5 @@
 class NetworkConstants {
-  static const BASE_URL = "https://backend.farmguard.my.id/";
+  static const BASE_URL = "https://farmguard.my.id/";
   static const CLASSIFICATION_BASE_URL =
       "https://backend.farmguard.my.id/";
 
