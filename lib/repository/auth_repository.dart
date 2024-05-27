@@ -13,6 +13,7 @@ import 'package:farm_guard/repository/model/response/login_response.dart';
 import 'package:farm_guard/repository/model/response/otp_response.dart';
 import 'package:farm_guard/repository/model/response/register_response.dart';
 import 'package:farm_guard/utils/network/api_client.dart';
+import 'package:farm_guard/utils/preferences/app_preferences.dart';
 
 class AuthRepository extends ApiClient {
   Future<Either<LoginErrorResponse, LoginResponse>> loginUser(
@@ -56,8 +57,40 @@ class AuthRepository extends ApiClient {
   }
 
   Future<EditProfileResponse> editProfile(
+      String name, String birthDate, String gender) async {
+
+    var token = await AppPreferences().readSecureData(AppPreferences().token);
+
+    print("Tokenn yagesya $token");
+
+    FormData formData = FormData.fromMap({
+      "name": name,
+      "birthdate": birthDate,
+      "gender": gender,
+    });
+    Dio dio = new Dio(BaseOptions(
+      validateStatus: (statusCode) {
+        return true;
+      },
+      headers: {
+        "Authorization" : "Bearer $token"
+      }
+    ));
+    final response =
+        await dio.post(NetworkConstants.EDIT_PROFILE, data: formData);
+
+    print("Response $response");
+
+    return EditProfileResponse.fromJson(response.data);
+  }
+
+  Future<EditProfileResponse> editProfileWithPicture(
       String name, String birthDate, String gender, File photo) async {
+
+    var token = await AppPreferences().readSecureData(AppPreferences().token);
     String fileName = photo.path.split('/').last;
+    print("Tokenn yagesya $token");
+
     FormData formData = FormData.fromMap({
       "name": name,
       "birthdate": birthDate,
@@ -65,12 +98,18 @@ class AuthRepository extends ApiClient {
       "photo": await MultipartFile.fromFile(photo.path, filename: fileName),
     });
     Dio dio = new Dio(BaseOptions(
-      validateStatus: (statusCode) {
-        return true;
-      },
+        validateStatus: (statusCode) {
+          return true;
+        },
+        headers: {
+          "Authorization" : "Bearer $token"
+        }
     ));
     final response =
-        await dio.post(NetworkConstants.EDIT_PROFILE, data: formData);
+    await dio.post(NetworkConstants.EDIT_PROFILE, data: formData);
+
+    print("Response $response");
+
     return EditProfileResponse.fromJson(response.data);
   }
 

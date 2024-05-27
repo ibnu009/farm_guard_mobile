@@ -21,14 +21,13 @@ class profil extends StatefulWidget {
 }
 
 class _profilState extends State<profil> {
-
   final profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-          () => Container(
+        () => Container(
           margin: EdgeInsets.only(top: 40, left: 30, right: 30),
           child: Column(
             children: [
@@ -47,18 +46,20 @@ class _profilState extends State<profil> {
                     ),
                     Stack(
                       children: [
-                        SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: Container(
-                            alignment: Alignment.topCenter,
-                            child: Image.asset('assets/profil.png'),
-                          ),
-                        ),
+                        profileController.isLoading.value
+                            ? CircularProgressIndicator()
+                            : CircleAvatar(
+                                radius: 48,
+                                backgroundImage:
+                                    NetworkImage(profileController.photo.value),
+                              ),
                         Positioned(
                           bottom: 0,
                           right: 0,
                           child: GestureDetector(
+                            onTap: () {
+                              profileController.showChangeProfilePictureBottomSheet();
+                            },
                             child: Container(
                               width: 35,
                               height: 35,
@@ -219,7 +220,8 @@ class _profilState extends State<profil> {
                 margin: EdgeInsets.only(left: 20, right: 20),
                 child: GestureDetector(
                   onTap: () async {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContactByWaPage()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ContactByWaPage()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

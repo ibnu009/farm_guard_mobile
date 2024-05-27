@@ -355,6 +355,71 @@ class _RegisterState extends State<register> {
               SizedBox(
                 height: 20,
               ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text('Jenis Kelamin',
+                    style: GoogleFonts.poppins(
+                        color: Color(0xff3E3E3E),
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700)),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                controller: registerController.genderController,
+                style: TextStyle(
+                    color: Color(0xff444444),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600),
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.male),
+                  hintText: 'Pilih jenis kelamin',
+                  hintStyle: GoogleFonts.poppins(
+                      color: Color.fromRGBO(110, 124, 141, 1),
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal),
+                ),
+                onTap: () {
+                  registerController.showGenderPickerDialog();
+                  FocusScope.of(context).unfocus();
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text('Tanggal Lahir',
+                    style: GoogleFonts.poppins(
+                        color: Color(0xff3E3E3E),
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700)),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                controller: registerController.birthDateController,
+                style: TextStyle(
+                    color: Color(0xff444444),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600),
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.date_range),
+                  hintText: '20-10-2002',
+                  hintStyle: GoogleFonts.poppins(
+                      color: Color.fromRGBO(110, 124, 141, 1),
+                      fontSize: 15,
+                      fontWeight: FontWeight.normal),
+                ),
+                onTap: () {
+                  registerController.showBirthDatePicker();
+                },
+              ),
+              SizedBox(
+                height: 15,
+              ),
               phoneNumberInput(),
               SizedBox(
                 height: 20,
@@ -367,7 +432,6 @@ class _RegisterState extends State<register> {
               // SizedBox(
               //   height: 20,
               // ),
-              // footer(),
               SizedBox(
                 height: 75,
               ),

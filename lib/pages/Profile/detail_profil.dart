@@ -14,6 +14,7 @@ class detail_profil extends StatefulWidget {
 class _detail_profilState extends State<detail_profil> {
 
   final ProfileController controller = Get.find();
+  TextEditingController birthDateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +90,10 @@ class _detail_profilState extends State<detail_profil> {
                     fontSize: 15,
                     fontWeight: FontWeight.normal),
               ),
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                controller.showBirthDatePicker();
+              },
             ),
             SizedBox(
               height: 20,
@@ -105,6 +110,7 @@ class _detail_profilState extends State<detail_profil> {
               height: 15,
             ),
             TextFormField(
+              readOnly: true,
               controller: controller.phoneNumberController,
               style: TextStyle(
                   color: Color(0xff444444),
@@ -174,6 +180,10 @@ class _detail_profilState extends State<detail_profil> {
                     fontSize: 15,
                     fontWeight: FontWeight.normal),
               ),
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                controller.showGenderPickerDialog();
+              },
             ),
             Spacer(),
             saveButton(),
@@ -188,7 +198,7 @@ class _detail_profilState extends State<detail_profil> {
 
   Widget saveButton() {
     return Container(
-      width: 400,
+      width: double.infinity,
       height: 60,
       child: TextButton(
         style: TextButton.styleFrom(

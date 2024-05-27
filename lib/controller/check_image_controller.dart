@@ -18,7 +18,7 @@ class CheckImageController extends GetxController {
   RxBool isPickedImage = false.obs;
 
   Future<void> getImageFromGallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
 
     if (pickedFile != null) {
       isPickedImage.value = true;
@@ -30,7 +30,7 @@ class CheckImageController extends GetxController {
   }
 
   Future<void> getImageFromCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera, imageQuality: 50);
 
     if (pickedFile != null) {
       isPickedImage.value = true;

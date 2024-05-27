@@ -47,7 +47,7 @@ class ClassificationRepository extends ApiClient {
           }
         ));
     print(response.data);
-    if (response.data["message"] == "Berhasil") {
+    if (response.data ["meta"]["message"] == "Berhasil") {
       return Right(ClassificationResponse.fromJson(response.data));
     } else {
       return Left(ErrorResponse(
