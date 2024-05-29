@@ -15,7 +15,7 @@ class GetProfileResponse {
   String phone;
   DateTime birthdate;
   String gender;
-  DateTime emailVerifiedAt;
+  DateTime? emailVerifiedAt;
   String photo;
   DateTime createdAt;
   DateTime updatedAt;
@@ -40,7 +40,7 @@ class GetProfileResponse {
     phone: json["phone"],
     birthdate: DateTime.parse(json["birthdate"]),
     gender: json["gender"],
-    emailVerifiedAt: DateTime.parse(json["email_verified_at"]),
+    emailVerifiedAt: json["email_verified_at"] == null ? null : DateTime.parse(json["email_verified_at"]),
     photo: json["photo"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
@@ -53,7 +53,6 @@ class GetProfileResponse {
     "phone": phone,
     "birthdate": birthdate.toIso8601String(),
     "gender": gender,
-    "email_verified_at": emailVerifiedAt.toIso8601String(),
     "photo": photo,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),

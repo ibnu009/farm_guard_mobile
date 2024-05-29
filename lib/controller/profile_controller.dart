@@ -42,8 +42,9 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() async {
-    await getUserData();
     super.onInit();
+    await getUserData();
+
   }
 
   Future getUserData() async {
@@ -53,7 +54,7 @@ class ProfileController extends GetxController {
       name.value = user.name;
       phone.value = user.phone;
       email.value = user.email;
-      photo.value = "https://farmguard.my.id/storage/photos/Dwiki/1716521779_SAPIIIIIHHHH.jpeg";
+      photo.value = user.photo;
       print(phone);
       print("photo $photo");
 
