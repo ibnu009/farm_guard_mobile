@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:farm_guard/controller/profile_controller.dart';
 import 'package:farm_guard/pages/Login/login.dart';
 import 'package:farm_guard/pages/Profile/FAQ.dart';
@@ -48,17 +49,47 @@ class _profilState extends State<profil> {
                       children: [
                         profileController.isLoading.value
                             ? CircularProgressIndicator()
-                            : CircleAvatar(
-                                radius: 48,
-                                backgroundImage:
-                                    NetworkImage(profileController.photo.value),
-                              ),
+                            : profileController.isAfterEditing.value
+                                ? CircleAvatar(
+                                    radius: 48,
+                                    backgroundImage: FileImage(
+                                        profileController.imageFile.value!),
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: ClipOval(
+                                      child: CachedNetworkImage(
+                                          width: 100,
+                                          height: 100,
+                                          progressIndicatorBuilder:
+                                              (context, loading, progress) =>
+                                                  Padding(
+                                                    padding: EdgeInsets.all(3),
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: progress.progress,
+                                                    ),
+                                                  ),
+                                          errorWidget: (context, url, error) =>
+                                              Image.asset(
+                                                "assets/profile.png",
+                                                width: 100,
+                                                height: 100,
+                                                fit: BoxFit.cover,
+                                              ),
+                                          imageUrl:
+                                              profileController.photo.value),
+                                    ),
+                                  ),
                         Positioned(
                           bottom: 0,
                           right: 0,
                           child: GestureDetector(
                             onTap: () {
-                              profileController.showChangeProfilePictureBottomSheet();
+                              profileController
+                                  .showChangeProfilePictureBottomSheet();
                             },
                             child: Container(
                               width: 35,

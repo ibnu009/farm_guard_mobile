@@ -8,6 +8,7 @@ class NetworkConstants {
   static const LOGIN_URL = BASE_URL + "api/login";
   static const OTP_URL = BASE_URL + "api/register/activate";
   static const EDIT_PROFILE = BASE_URL + "api/user/update-profile";
+  static const GET_PROFILE = BASE_URL + "api/user";
   static const CHANGE_PASSWORD = BASE_URL + "api/reset-password";
   static const SEND_OTP_CHANGE_PASSWORD = BASE_URL + "api/forgot-password";
   static const FORGOT_PASSWORD = BASE_URL + "api/forgot-password";

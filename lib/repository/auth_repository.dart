@@ -9,6 +9,7 @@ import 'package:farm_guard/repository/model/response/change_password_response.da
 import 'package:farm_guard/repository/model/request/reset_password_request.dart';
 import 'package:farm_guard/repository/model/response/edit_profile_response.dart';
 import 'package:farm_guard/repository/model/response/error_authentication_response.dart';
+import 'package:farm_guard/repository/model/response/get_profile_response.dart';
 import 'package:farm_guard/repository/model/response/login_response.dart';
 import 'package:farm_guard/repository/model/response/otp_response.dart';
 import 'package:farm_guard/repository/model/response/register_response.dart';
@@ -54,6 +55,12 @@ class AuthRepository extends ApiClient {
     );
 
     return OtpResponse.fromJson(response);
+  }
+
+  Future<GetProfileResponse> getProfile() async {
+    final response = await get(NetworkConstants.GET_PROFILE);
+
+    return GetProfileResponse.fromJson(response);
   }
 
   Future<EditProfileResponse> editProfile(

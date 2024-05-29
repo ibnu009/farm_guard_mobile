@@ -1,3 +1,4 @@
+import 'package:farm_guard/repository/auth_repository.dart';
 import 'package:farm_guard/repository/model/response/get_history_response.dart';
 import 'package:farm_guard/repository/record_repository.dart';
 import 'package:farm_guard/utils/preferences/app_preferences.dart';
@@ -8,6 +9,7 @@ class HomeController extends GetxController {
   final appPreferences = AppPreferences();
 
   RxString name = "".obs;
+  RxString image = "".obs;
 
   RxList<HistoryData> historyList = <HistoryData>[].obs;
 
@@ -15,12 +17,20 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
+    initData();
     super.onInit();
   }
 
   void initData() async {
+    await getProfile();
     await getRecordHistory();
     await getUserData();
+  }
+
+  Future getProfile() async {
+    final response = await AuthRepository().getProfile();
+
+    image.value = response.photo;
   }
 
   Future getUserData() async {

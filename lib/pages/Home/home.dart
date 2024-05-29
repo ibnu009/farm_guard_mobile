@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:farm_guard/controller/home_controller.dart';
 import 'package:farm_guard/pages/Home/cek_gambar.dart';
 import 'package:farm_guard/pages/detail_history_screen.dart';
@@ -61,9 +62,31 @@ class _homeState extends State<home> {
                         children: [
                           Row(
                             children: [
-                              Image.asset(
-                                'assets/profil.png',
-                                width: 70,
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: ClipOval(
+                                  child: CachedNetworkImage(
+                                      width: 70,
+                                      height: 70,
+                                      progressIndicatorBuilder: (context,
+                                              loading, progress) =>
+                                          Padding(
+                                            padding: EdgeInsets.all(3),
+                                            child: CircularProgressIndicator(
+                                              value: progress.progress,
+                                            ),
+                                          ),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                            "assets/profile.png",
+                                            width: 70,
+                                            height: 70,
+                                            fit: BoxFit.cover,
+                                          ),
+                                      imageUrl: homeController.image.value),
+                                ),
                               ),
                               SizedBox(
                                 width: 30,
@@ -135,7 +158,7 @@ class _homeState extends State<home> {
               ),
             ),
             homeController.isLoadingRecordData.value
-                ? CircularProgressIndicator()
+                ? Center(child: CircularProgressIndicator())
                 : Expanded(
                     child: Container(
                       margin: EdgeInsets.only(left: 30, right: 30),
@@ -156,33 +179,46 @@ class _homeState extends State<home> {
                                     itemBuilder: (ctx, index) {
                                       final data =
                                           homeController.historyList[index];
-                                      return Row(
-                                        children: [
-                                          Icon(Icons.adb),
-                                          SizedBox(width: 16),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Sapi ${data.typeHealth}',
-                                                style: GoogleFonts.poppins(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                      return InkWell(
+                                        onTap: () {
+                                          Get.toNamed(
+                                              DetailHistoryScreen.routeName,
+                                              arguments: {
+                                                "history_data": data
+                                              });
+                                        },
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                data.pathImage,
                                               ),
-                                              Text(
-                                                data.date,
-                                                style: GoogleFonts.poppins(
-                                                  color: Colors.black,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w400,
+                                            ),
+                                            SizedBox(width: 16),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Sapi ${data.typeHealth}',
+                                                  style: GoogleFonts.poppins(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                                                Text(
+                                                  data.date,
+                                                  style: GoogleFonts.poppins(
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       );
                                     },
                                   )

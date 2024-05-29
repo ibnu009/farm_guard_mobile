@@ -25,6 +25,7 @@ class ProfileController extends GetxController {
   RxString photo = "".obs;
 
   RxBool isLoading = false.obs;
+  RxBool isAfterEditing = false.obs;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController birthDateController = TextEditingController();
@@ -47,12 +48,12 @@ class ProfileController extends GetxController {
 
   Future getUserData() async {
     isLoading.value = true;
-    final user = await appPreferences.getUser();
+    final user = await AuthRepository().getProfile();
     if (user != null) {
       name.value = user.name;
       phone.value = user.phone;
       email.value = user.email;
-      photo.value = user.photo;
+      photo.value = "https://farmguard.my.id/storage/photos/Dwiki/1716521779_SAPIIIIIHHHH.jpeg";
       print(phone);
       print("photo $photo");
 
@@ -182,15 +183,21 @@ class ProfileController extends GetxController {
     if (response.meta.code == 200) {
       Get.back();
       Get.back();
-      userData.photo = "$fileName";
+      userData.photo = "https://farmguard.my.id/storage/photos/${userData.name}/$fileName";
       await appPreferences.setUser(userData);
       CustomSnackbar.successMessage("Informasi", "Berhasil mengubah photo profile");
       await getUserData();
+      isAfterEditing.value = true;
       update();
     } else {
       CustomSnackbar.errorMessage("Informasi", response.meta.message);
     }
     LoadingUtils.hideLoader();
+  }
+
+  Future<void> getProfile() async {
+    final response = await AuthRepository().getProfile();
+
   }
 
   Future<void> editProfile() async {
@@ -231,11 +238,6 @@ class ProfileController extends GetxController {
     if (response.meta.code == 200) {
       Get.back();
       Get.back();
-      final userData = await appPreferences.getUser();
-      userData!.name = nameController.text;
-      userData.birthdate = birthDateTime.value;
-      userData.gender = gender;
-      await appPreferences.setUser(userData);
       CustomSnackbar.successMessage("Informasi", "Berhasil mengubah profil");
       await getUserData();
       FocusScope.of(Get.context!).unfocus();
@@ -369,7 +371,7 @@ class ProfileController extends GetxController {
                     borderRadius: BorderRadius.circular(20)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.file(
                       File(pickedFile.path),
