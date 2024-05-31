@@ -17,8 +17,8 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-    initData();
     super.onInit();
+    initData();
   }
 
   void initData() async {

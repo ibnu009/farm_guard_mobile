@@ -104,13 +104,6 @@ class _homeState extends State<home> {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      // SizedBox(
-                                      //   width: 5,
-                                      // ),
-                                      // Image.asset(
-                                      //   'assets/.png',
-                                      //   width: 20,
-                                      // )
                                     ],
                                   ),
                                   Text(

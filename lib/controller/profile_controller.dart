@@ -42,9 +42,8 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() async {
-    super.onInit();
     await getUserData();
-
+    super.onInit();
   }
 
   Future getUserData() async {
