@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-GetHistoryResponse getHistoryResponseFromJson(String str) => GetHistoryResponse.fromJson(json.decode(str));
+GetHistoryResponse getHistoryResponseFromJson(String str) =>
+    GetHistoryResponse.fromJson(json.decode(str));
 
-String getHistoryResponseToJson(GetHistoryResponse data) => json.encode(data.toJson());
+String getHistoryResponseToJson(GetHistoryResponse data) =>
+    json.encode(data.toJson());
 
 class GetHistoryResponse {
   Meta meta;
@@ -17,39 +19,44 @@ class GetHistoryResponse {
     required this.data,
   });
 
-  factory GetHistoryResponse.fromJson(Map<String, dynamic> json) => GetHistoryResponse(
-    meta: Meta.fromJson(json["meta"]),
-    data: List<HistoryData>.from(json["data"].map((x) => HistoryData.fromJson(x))),
-  );
+  factory GetHistoryResponse.fromJson(Map<String, dynamic> json) =>
+      GetHistoryResponse(
+        meta: Meta.fromJson(json["meta"]),
+        data: List<HistoryData>.from(
+            json["data"].map((x) => HistoryData.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "meta": meta.toJson(),
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
+        "meta": meta.toJson(),
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
 }
 
 class HistoryData {
   String typeHealth;
   String pathImage;
   String date;
+  String accuration;
 
-  HistoryData({
-    required this.typeHealth,
-    required this.pathImage,
-    required this.date,
-  });
+  HistoryData(
+      {required this.typeHealth,
+      required this.pathImage,
+      required this.date,
+      required this.accuration});
 
   factory HistoryData.fromJson(Map<String, dynamic> json) => HistoryData(
-    typeHealth: json["type_health"],
-    pathImage: json["path_image"],
-    date: json["date"],
+      typeHealth: json["type_health"],
+      pathImage: json["path_image"],
+      date: json["date"],
+      accuration: json["accuration"] == null ? '' : json["accuration"],
   );
 
   Map<String, dynamic> toJson() => {
-    "type_health": typeHealth,
-    "path_image": pathImage,
-    "date": date,
-  };
+        "type_health": typeHealth,
+        "path_image": pathImage,
+        "date": date,
+        "accuration": accuration
+      };
 }
 
 class Meta {
@@ -64,14 +71,14 @@ class Meta {
   });
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-    code: json["code"],
-    status: json["status"],
-    message: json["message"],
-  );
+        code: json["code"],
+        status: json["status"],
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "code": code,
-    "status": status,
-    "message": message,
-  };
+        "code": code,
+        "status": status,
+        "message": message,
+      };
 }

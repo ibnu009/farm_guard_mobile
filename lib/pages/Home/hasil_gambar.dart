@@ -15,6 +15,8 @@ class _hasil_gambarState extends State<hasil_gambar> {
   final filePath = Get.arguments['file_path'];
   final result = Get.arguments['result'];
   final note = Get.arguments['note'];
+  final accuracy = Get.arguments['accuration'];
+
 
   @override
   void initState() {

@@ -23,7 +23,7 @@ class RecordRepository extends ApiClient {
   }
 
   Future<Either<ErrorResponse, UploadHealthRecordResponse>>
-      uploadHealthRecordResponse(String typeHealth, File file) async {
+      uploadHealthRecordResponse(String typeHealth, File file, String accuracy) async {
     Dio dio = new Dio(BaseOptions(
       validateStatus: (statusCode) {
         if (statusCode == null) {
@@ -49,10 +49,11 @@ class RecordRepository extends ApiClient {
     String fileName = file.path.split('/').last;
     FormData formData = FormData.fromMap({
       "path_image": await MultipartFile.fromFile(file.path, filename: fileName),
-      "type_health": typeHealth
+      "type_health": typeHealth,
+      "accuration": accuracy
     });
 
-    print(formData.fields);
+    print("DATA IS: \n" + formData.fields.toString());
 
     var token = await AppPreferences().readSecureData(AppPreferences().token);
     final response = await dio.post(

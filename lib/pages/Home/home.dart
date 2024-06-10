@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:farm_guard/controller/home_controller.dart';
 import 'package:farm_guard/pages/Home/cek_gambar.dart';
 import 'package:farm_guard/pages/detail_history_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,7 +19,6 @@ class _homeState extends State<home> {
 
   @override
   Widget build(BuildContext context) {
-    homeController.initData();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
           child: Icon(
@@ -104,6 +104,13 @@ class _homeState extends State<home> {
                                           color: Colors.white,
                                         ),
                                       ),
+                                      // SizedBox(
+                                      //   width: 5,
+                                      // ),
+                                      // Image.asset(
+                                      //   'assets/.png',
+                                      //   width: 20,
+                                      // )
                                     ],
                                   ),
                                   Text(
@@ -142,12 +149,22 @@ class _homeState extends State<home> {
             Divider(color: Colors.black),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'Riwayat',
-                style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
+              child: Row(
+                children: [
+                  Text(
+                    'Riwayat',
+                    style: GoogleFonts.poppins(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                      onTap: (){
+                        homeController.initData();
+                      },
+                      child: Icon(Icons.refresh))
+                ],
               ),
             ),
             homeController.isLoadingRecordData.value
@@ -162,59 +179,59 @@ class _homeState extends State<home> {
                             homeController.historyList.isEmpty
                                 ? Text("Belum ada riwayat pemeriksaan")
                                 : ListView.separated(
-                                    shrinkWrap: true,
-                                    physics: ScrollPhysics(),
-                                    itemCount:
-                                        homeController.historyList.length,
-                                    separatorBuilder: (ctx, index) {
-                                      return SizedBox(height: 16);
-                                    },
-                                    itemBuilder: (ctx, index) {
-                                      final data =
-                                          homeController.historyList[index];
-                                      return InkWell(
-                                        onTap: () {
-                                          Get.toNamed(
-                                              DetailHistoryScreen.routeName,
-                                              arguments: {
-                                                "history_data": data
-                                              });
-                                        },
-                                        child: Row(
-                                          children: [
-                                            CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                data.pathImage,
-                                              ),
-                                            ),
-                                            SizedBox(width: 16),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Sapi ${data.typeHealth}',
-                                                  style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  data.date,
-                                                  style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount:
+                              homeController.historyList.length,
+                              separatorBuilder: (ctx, index) {
+                                return SizedBox(height: 16);
+                              },
+                              itemBuilder: (ctx, index) {
+                                final data =
+                                homeController.historyList[index];
+                                return InkWell(
+                                  onTap: () {
+                                    Get.toNamed(
+                                        DetailHistoryScreen.routeName,
+                                        arguments: {
+                                          "history_data": data
+                                        });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                          data.pathImage,
                                         ),
-                                      );
-                                    },
-                                  )
+                                      ),
+                                      SizedBox(width: 16),
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Sapi ${data.typeHealth}',
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Text(
+                                            data.date,
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            )
                           ],
                         ),
                       ),

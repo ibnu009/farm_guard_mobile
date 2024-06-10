@@ -54,7 +54,7 @@ class CheckImageController extends GetxController {
         },
         (success) async {
           final uploadResponse = await recordRepository
-              .uploadHealthRecordResponse(success.assumption, imageFile.value!);
+              .uploadHealthRecordResponse(success.assumption, imageFile.value!, success.akurasi);
           uploadResponse.fold(
             (failure) {
               LoadingUtils.hideLoader();
@@ -65,7 +65,8 @@ class CheckImageController extends GetxController {
               Get.toNamed(hasil_gambar.routeName, arguments: {
                 "file_path": imageFile.value?.path,
                 "result": success.assumption,
-                "note" : success.note
+                "note" : success.note,
+                "accuration": success.akurasi
               });
             },
           );

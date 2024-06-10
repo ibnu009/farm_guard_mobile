@@ -83,10 +83,17 @@ class DetailHistoryScreen extends StatelessWidget {
           Text(historyData.typeHealth, style: GoogleFonts.poppins(),),
           SizedBox(height: 8),
           Text(
+            "Akurasi",
+            style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          Text(historyData.accuration, style: GoogleFonts.poppins()),
+          SizedBox(height: 8),
+          Text(
             "Catatan",
             style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          Text(getClassificationNote(), style: GoogleFonts.poppins())
+          Text(getClassificationNote(), style: GoogleFonts.poppins()),
+
         ],
       ),
     );
