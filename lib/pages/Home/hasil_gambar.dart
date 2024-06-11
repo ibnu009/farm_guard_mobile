@@ -59,14 +59,24 @@ class _hasil_gambarState extends State<hasil_gambar> {
                 height: 50,
               ),
               Text(
-                'Terdeteksi $result',
+                _makeResultText(),
                 style: GoogleFonts.poppins(
                   fontSize: 25,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 4,
+              ),
+              Text(
+                _makeAccuracyText(),
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              SizedBox(
+                height: 16,
               ),
               Text(
                 note,
@@ -82,5 +92,21 @@ class _hasil_gambarState extends State<hasil_gambar> {
         ),
       ),
     );
+  }
+
+  String _makeResultText(){
+    if (result.toString().toLowerCase() == "normal" || result.toString().toLowerCase() == "pmk"){
+      return 'Terdeteksi $result';
+    }
+
+    return '$result';
+  }
+
+  String _makeAccuracyText(){
+    if (result.toString().toLowerCase() == "normal" || result.toString().toLowerCase() == "pmk"){
+      return 'Akurasi: $accuracy';
+    }
+
+    return '';
   }
 }

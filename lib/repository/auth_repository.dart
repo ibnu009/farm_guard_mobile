@@ -67,9 +67,6 @@ class AuthRepository extends ApiClient {
       String name, String birthDate, String gender) async {
 
     var token = await AppPreferences().readSecureData(AppPreferences().token);
-
-    print("Tokenn yagesya $token");
-
     FormData formData = FormData.fromMap({
       "name": name,
       "birthdate": birthDate,

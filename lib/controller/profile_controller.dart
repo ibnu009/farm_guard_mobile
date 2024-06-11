@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 
+import 'package:farm_guard/controller/home_controller.dart';
 import 'package:farm_guard/repository/auth_repository.dart';
 import 'package:farm_guard/utils/dialog/loading_utils.dart';
 import 'package:farm_guard/utils/preferences/app_preferences.dart';
@@ -13,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../repository/model/response/login_response.dart';
 import '../utils/dialog/custom_snackbar.dart';
 
 class ProfileController extends GetxController {
@@ -169,11 +171,14 @@ class ProfileController extends GetxController {
 
   Future<void> editProfilePicture() async {
     LoadingUtils.showLoading();
-    final userData = await appPreferences.getUser();
+    // final userData = await appPreferences.getUser();
+    final userData = await AuthRepository().getProfile();
+
+
     String fileName = imageFile.value!.path.split('/').last;
     final response = await AuthRepository().editProfileWithPicture(
       userData!.name,
-      userData.birthdate.formatDate(),
+      userData.birthdate?.formatDate() ?? '',
       userData.gender,
       imageFile.value!,
     );
@@ -183,9 +188,12 @@ class ProfileController extends GetxController {
     if (response.meta.code == 200) {
       Get.back();
       Get.back();
-      userData.photo = "https://farmguard.my.id/storage/photos/${userData.name}/$fileName";
-      await appPreferences.setUser(userData);
+      // userData.photo = "https://farmguard.my.id/storage/photos/${userData.name}/$fileName";
       CustomSnackbar.successMessage("Informasi", "Berhasil mengubah photo profile");
+      // HomeController().initData();
+      final homeController = Get.put(HomeController());
+      homeController.initData();
+
       await getUserData();
       isAfterEditing.value = true;
       update();
@@ -193,11 +201,6 @@ class ProfileController extends GetxController {
       CustomSnackbar.errorMessage("Informasi", response.meta.message);
     }
     LoadingUtils.hideLoader();
-  }
-
-  Future<void> getProfile() async {
-    final response = await AuthRepository().getProfile();
-
   }
 
   Future<void> editProfile() async {

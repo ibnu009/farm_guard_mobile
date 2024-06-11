@@ -1,5 +1,6 @@
 import 'package:farm_guard/repository/auth_repository.dart';
 import 'package:farm_guard/repository/model/response/get_history_response.dart';
+import 'package:farm_guard/repository/model/response/login_response.dart';
 import 'package:farm_guard/repository/record_repository.dart';
 import 'package:farm_guard/utils/preferences/app_preferences.dart';
 import 'package:get/get.dart';
@@ -24,20 +25,24 @@ class HomeController extends GetxController {
   void initData() async {
     await getProfile();
     await getRecordHistory();
-    await getUserData();
   }
 
   Future getProfile() async {
     final response = await AuthRepository().getProfile();
 
     image.value = response.photo;
-  }
+    name.value = response.name;
 
-  Future getUserData() async {
-    final user = await appPreferences.getUser();
-    if (user != null) {
-      name.value = user.name;
-    }
+    print("IMAGE VALUE = $image");
+
+    await AppPreferences().setUser(User(
+        id: response.id,
+        name: response.name,
+        email: response.email,
+        phone: response.photo,
+        birthdate: response.birthdate,
+        gender: response.gender,
+        photo: response.photo));
   }
 
   Future getRecordHistory() async {
@@ -51,7 +56,8 @@ class HomeController extends GetxController {
         isLoadingRecordData.value = false;
       },
       (success) {
-        historyList.addAll(success.data.where((element) => element.typeHealth != "Kelas Tidak ditemukan"));
+        historyList.addAll(success.data
+            .where((element) => element.typeHealth != "Kelas Tidak ditemukan"));
         isLoadingRecordData.value = false;
         print(historyList);
       },

@@ -49,12 +49,12 @@ class User {
   String name;
   String email;
   String phone;
-  DateTime birthdate;
+  DateTime? birthdate;
   String gender;
   dynamic emailVerifiedAt;
   String photo;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   User({
     required this.id,
@@ -63,10 +63,10 @@ class User {
     required this.phone,
     required this.birthdate,
     required this.gender,
-    required this.emailVerifiedAt,
+    this.emailVerifiedAt,
     required this.photo,
-    required this.createdAt,
-    required this.updatedAt,
+     this.createdAt,
+     this.updatedAt,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -74,12 +74,12 @@ class User {
     name: json["name"],
     email: json["email"],
     phone: json["phone"],
-    birthdate: DateTime.parse(json["birthdate"]),
+    birthdate: json["birthdate"] == null ? null :  DateTime.parse(json["birthdate"]),
     gender: json["gender"],
     emailVerifiedAt: json["email_verified_at"],
     photo: json["photo"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+    updatedAt: json["updated_at"] == null ? null :  DateTime.parse(json["updated_at"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -87,12 +87,12 @@ class User {
     "name": name,
     "email": email,
     "phone": phone,
-    "birthdate": birthdate.toIso8601String(),
+    "birthdate": birthdate?.toIso8601String(),
     "gender": gender,
     "email_verified_at": emailVerifiedAt,
     "photo": photo,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
+    "created_at": createdAt?.toIso8601String(),
+    "updated_at": updatedAt?.toIso8601String(),
   };
 }
 
